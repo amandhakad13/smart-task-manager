@@ -45,4 +45,31 @@ public class UserDaoImpl implements UserDao {
 		}
 		return false;
 	}
+
+	@Override
+	public User checkLoginDetails(String email, String password) {
+		
+		User u = null;
+		try {
+			Connection con = DBConnection.getConnection();
+			String query = "select * from users where email = ? and password = ?";
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setString(1, email);
+			pstmt.setString(2, password);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				u = new User();
+				
+				u.setId(rs.getInt(1));
+				u.setName(rs.getString(2));
+				u.setEmail(rs.getString(3));
+				u.setRole(rs.getString(5));;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return u;
+	}
 }

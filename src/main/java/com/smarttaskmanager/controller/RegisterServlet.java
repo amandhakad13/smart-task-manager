@@ -67,6 +67,7 @@ public class RegisterServlet extends HttpServlet {
 		boolean isInsert = udao.insertDetails(u);
 		
 		if(isInsert) {
+			request.setAttribute("success", "Registration Successfull");
 			response.sendRedirect("login.jsp");
 		}
 		else {
