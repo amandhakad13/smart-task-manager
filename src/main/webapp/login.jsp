@@ -40,7 +40,7 @@
     </div>
     
     <%
-    	String success = (String) request.getAttribute("success");
+    	String success = (String) session.getAttribute("success");
         String error = (String) request.getAttribute("error");
                 		
         if(success!=null) {
@@ -48,7 +48,7 @@
         		<h3><%= success %></h3>
         	<%
         	
-        	request.removeAttribute("success");
+        	session.removeAttribute("success");
         }
         
         if(error!=null) {

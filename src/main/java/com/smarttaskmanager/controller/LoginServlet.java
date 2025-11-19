@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect("admin-dashboard.jsp");
 			}
 			else {
-				response.sendRedirect("task.jsp");
+				response.sendRedirect("taskServlet");
 			}
 		}
 		

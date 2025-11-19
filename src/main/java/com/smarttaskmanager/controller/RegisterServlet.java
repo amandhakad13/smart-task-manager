@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import com.smarttaskmanager.dao.UserDao;
@@ -67,7 +69,8 @@ public class RegisterServlet extends HttpServlet {
 		boolean isInsert = udao.insertDetails(u);
 		
 		if(isInsert) {
-			request.setAttribute("success", "Registration Successfull");
+			HttpSession session = request.getSession();
+			session.setAttribute("success", "Registration Successfull");
 			response.sendRedirect("login.jsp");
 		}
 		else {
