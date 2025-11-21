@@ -35,6 +35,13 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
+		if(email==null || email.trim().isEmpty()
+		   || password==null || password.trim().isEmpty()) {
+			   request.setAttribute("fields", "All fields are required!");
+			   request.getRequestDispatcher("login.jsp").forward(request, response);
+			   return;
+		}
+		
 		UserDao udao = new UserDaoImpl();
 		
 		User u = udao.checkLoginDetails(email, password);

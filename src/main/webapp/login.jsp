@@ -42,6 +42,7 @@
     <%
     	String success = (String) session.getAttribute("success");
         String error = (String) request.getAttribute("error");
+        String fields = (String) request.getAttribute("fields");
                 		
         if(success!=null) {
         	%>
@@ -57,6 +58,14 @@
         	<%
         	
         	request.removeAttribute("error");
+        }
+        
+        if(fields!=null) {
+        	%>
+        		<h3><%= fields %></h3>
+        	<%
+        	
+        	request.removeAttribute("fields");
         }
     
     %>

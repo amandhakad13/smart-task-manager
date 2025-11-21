@@ -8,47 +8,34 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.List;
-
-import com.smarttaskmanager.dao.TaskDao;
-import com.smarttaskmanager.dao.TaskDaoImpl;
-import com.smarttaskmanager.model.Task;
-import com.smarttaskmanager.model.User;
 
 /**
- * Servlet implementation class TaskServlet
+ * Servlet implementation class LogoutServlet
  */
-@WebServlet("/taskServlet")
-public class TaskServlet extends HttpServlet {
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TaskServlet() {
+    public LogoutServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
 		
-		HttpSession hs = request.getSession();
-		User u = (User) hs.getAttribute("user");
+		session.removeAttribute("user");
 		
-		if(hs == null || u == null) {
-			response.sendRedirect("login.jsp");
-			return;
-		}
+		session.invalidate();
 		
-		TaskDao tdao = new TaskDaoImpl();
-		
-		List<Task> ls = tdao.showAllTasks(u.getId());
-		
-		hs.setAttribute("task", ls);
-		response.sendRedirect("tasks.jsp");
-		
+		response.sendRedirect("login.jsp");
 	}
 
 }

@@ -1,13 +1,19 @@
+<%
+	User u = (User) session.getAttribute("user");
+
+	if(u==null) {
+		response.sendRedirect("login.jsp");
+		return;
+	}
+%>
+
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.smarttaskmanager.model.Task"%>
 <%@page import="java.util.List"%>
 <%@page import="com.smarttaskmanager.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
-<%
-	User u = (User) session.getAttribute("user");
-%>
 
 <head>
     <meta charset="UTF-8">
@@ -21,7 +27,7 @@
         <div class="header-right">
             <a href="tasks.jsp">Home</a>
             <span class="username">👤 <%= u.getName() %></span>
-            <a href="logout.jsp">Logout</a>
+            <a href="logout">Logout</a>
         </div>
     </div>
 
@@ -30,7 +36,7 @@
             <h2 class="section-title">📋 My Tasks</h2>
             
             <% 
-				List<Task> ls = (List<Task>) request.getAttribute("task");
+				List<Task> ls = (List<Task>) session.getAttribute("task");
 				
 				if(ls.isEmpty()) {
 					%>
