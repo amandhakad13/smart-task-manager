@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import com.smarttaskmanager.dao.TaskDao;
@@ -48,6 +49,50 @@ public class TaskServlet extends HttpServlet {
 		
 		hs.setAttribute("task", ls);
 		response.sendRedirect("tasks.jsp");
+		
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession hs = request.getSession();
+		User u = (User) hs.getAttribute("user");
+		
+		if(hs == null || u == null) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
+		
+		String action = request.getParameter("action");
+		
+		if(action.equals("add")) {
+			
+			String title = request.getParameter("title");
+			String description = request.getParameter("description");
+			String priority = request.getParameter("priority");
+			String dueDate = request.getParameter("due_date");
+			Date date = Date.valueOf(dueDate);
+			String status = request.getParameter("status");
+			
+			Task t = new Task();
+			t.setTitle(title);
+			t.setDescription(description);
+			t.setPriority(priority);
+			t.setDueDate(date);
+			t.setStatus(status);
+			
+			TaskDao tdao = new TaskDaoImpl();
+			boolean isInsert = tdao.addTask(t, u.getId());
+			
+			if(isInsert) {
+				response.sendRedirect("tasks.jsp");
+				return;
+			}
+			else {
+				request.setAttribute("error", "Something Went Wrong. Try Again!");
+				request.getRequestDispatcher("add-task.jsp").forward(request, response);
+				return;
+			}
+		}
 		
 	}
 

@@ -69,7 +69,7 @@
 			%>
         </div>
 
-        <button class="add-task-btn" onclick="location.href='addTask.jsp'">➕ Add New Task</button>
+        <button class="add-task-btn" onclick="location.href='add-task.jsp'">➕ Add New Task</button>
     </div>
 </body>
 </html>

@@ -7,4 +7,5 @@ import com.smarttaskmanager.model.Task;
 public interface TaskDao {
 	
 	public List<Task> showAllTasks(int id);
+	public boolean addTask(Task obj, int id);
 }

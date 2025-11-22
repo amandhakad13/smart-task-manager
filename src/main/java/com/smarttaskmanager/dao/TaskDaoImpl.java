@@ -45,4 +45,25 @@ public class TaskDaoImpl implements TaskDao {
 		return ls;
 	}
 
+	@Override
+	public boolean addTask(Task obj, int id) {
+		
+		try {
+			Connection con = DBConnection.getConnection();
+			String query = "insert into tasks (user_id, title, description, priority, due_date, status) values (?,?,?,?,?,?)";
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, id);
+			pstmt.setString(2, obj.getTitle());
+			pstmt.setString(3, obj.getDescription());
+			pstmt.setString(4, obj.getPriority());
+			pstmt.setDate(5, obj.getDueDate());
+			pstmt.setString(6, obj.getStatus());
+			
+			return pstmt.executeUpdate()>0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }
